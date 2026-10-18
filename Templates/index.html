@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %}Home — Flask Date App{% endblock %}
+{% block content %}
+<div class="container">
+    <p1>Welcome to the site! Pick any link to go to the page!</p1>
+</div>
+
+
+<div class="navigation">
+<a href="{{url_for('birdPage')}}">
+  <p>Bird Page</p>
+</a>
+<a href="{{url_for('seasonsPage')}}">
+  <p>Seasons Page</p>
+</a>
+    <a href="{{url_for('timePage')}}">
+        <p>Time Page</p>
+    </a>
+</a>
+    <a href="{{url_for('randomPage')}}">
+        <p>Random Number Page</p>
+    </a>
+
+</div>
+
+{% endblock %}
