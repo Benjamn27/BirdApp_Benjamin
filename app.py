@@ -1,8 +1,11 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from datetime import datetime
 import random
 
+
 app = Flask(__name__)
+
+app.secret_key = "topSecret"
 
 @app.route("/")
 def home():
@@ -37,3 +40,20 @@ def randomPage():
     randomNumber = random.randint(0,1000000)
 
     return render_template("random.html",number=randomNumber)
+
+@app.route("/profile", methods=["GET","POST"])
+def profilePage():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        email = request.form.get("email", "").strip()
+        quan = request.form.get("quan", "").strip()
+        comments = request.form.get("comments", "").strip()
+        rel = request.form.get("rel", "").strip()
+        accommodations = request.form.get("accommodations") == "yes"
+
+        if not name or not email or not quan or not rel:
+            error = "Please fill in all required fields"
+            return render_template("profileForm.html", error = error)
+        return render_template("success.html", name = name, email=email, quan=quan, comments=comments, rel=rel, accommodations=accommodations)
+    return render_template("profileForm.html")
+

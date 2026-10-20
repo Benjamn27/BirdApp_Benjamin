@@ -20,6 +20,28 @@
     <!-- Page-specific content will go here -->
     <main>{% block content %} {% endblock %}</main>
     <!-- Shared footer -->
-    <footer></footer>
+    <footer>
+<a href="{{url_for('birdPage')}}">
+  <p>Bird Page</p>
+</a>
+<a href="{{url_for('seasonsPage')}}">
+  <p>Seasons Page</p>
+</a>
+<a href="{{url_for('timePage')}}">
+        <p>Time Page</p>
+    </a>
+</a>
+<a href="{{url_for('randomPage')}}">
+        <p>Random Number Page</p>
+</a>
+        <a href="{{url_for('home')}}">
+        <p>Home</p>
+</a>
+</a>
+        <a href="{{url_for('profilePage')}}">
+        <p>Profile Form</p>
+</a>
+
+    </footer>
   </body>
 </html>
