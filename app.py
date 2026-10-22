@@ -57,3 +57,17 @@ def profilePage():
         return render_template("success.html", name = name, email=email, quan=quan, comments=comments, rel=rel, accommodations=accommodations)
     return render_template("profileForm.html")
 
+@app.route("/feedback", methods=["GET", "POST"])
+def feedbackPage():
+
+    if request.method == "POST":
+        rating = request.form.get("rating","").strip()
+        feedback = request.form.get("feedback", "").strip()
+
+        if not rating:
+            error = "Please provide a rating"
+            return render_template("feedbackForm.html", error=error)
+
+        return render_template("feedbackSuccess.html", rating=rating, feedback=feedback)
+
+    return render_template("feedbackForm.html")

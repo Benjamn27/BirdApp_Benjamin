@@ -1,12 +1,13 @@
-{% extends "base.html" %} {% block title %}Bird Page{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Bird Page{% endblock %} {% block
+content %}
 <div class="container">
-    <p>This is the bird page.</p>
-    <p>Here is the bird.</p>
-    <img 
+  <p>This is the bird page.</p>
+  <p>Here is the bird.</p>
+  <img
     class="bird-image"
-    src = "{{url_for('static', filename='Images/bird.png')}}"
-    alt = "Bird image"/>
+    src="{{url_for('static', filename='Images/bird.png')}}"
+    alt="Bird image"
+  />
 </div>
 
 {% endblock %}

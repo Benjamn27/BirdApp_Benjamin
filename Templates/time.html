@@ -1,15 +1,15 @@
-{% extends "base.html" %} {% block title %}Time{% endblock %} {%
-block content %}
+{% extends "base.html" %} {% block title %}Time{% endblock %} {% block content
+%}
 <div class="container">
-<p>It is {{hour}}:{{minute}}.</p>
-<p>If you want to wake up by 6:00, you should be in bed by 22:00.</p>
-{% if hour >= 22 %}
-<p>You should go to bed!</p>
-{% elif hour < 6 %}
-<p>You are up too early or up way too late!</p>
-{% else %}
-<p>You should be awake.</p>
-{% endif %}
+  <p>It is {{hour}}:{{minute}}.</p>
+  <p>If you want to wake up by 6:00, you should be in bed by 22:00.</p>
+  {% if hour >= 22 %}
+  <p>You should go to bed!</p>
+  {% elif hour < 6 %}
+  <p>You are up too early or up way too late!</p>
+  {% else %}
+  <p>You should be awake.</p>
+  {% endif %}
 </div>
 
 {% endblock %}
