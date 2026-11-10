@@ -1,5 +1,37 @@
 {% extends "base.html" %} {% block title %}Admin{% endblock %}
 {% block content %}
+
+<a href="{{url_for('admin_profiles_appendComments')}}"> Add Accommodations Reminder to Comments</a>
+
+
+<form action="{{url_for('admin_profiles_appendComments')}}" method="POST">
+    <div>
+        <label for="append-text">Text to Add</label>
+        <input type="text" id="append-text" name="append-text" placeholder="Enter text to append">
+    </div>
+    <div>
+        <label for="append-rel-selector">Apply only to Relationship</label>
+        <select name="append-rel-selector" id="append-rel-selector" multiple>
+            <option value="all">All</option>
+            <option value="parent">Parent/Parent-In-Law</option>
+            <option value="sibling">Sibling/Sibling-In-Law</option>
+            <option value="other family">Other Family Member</option>
+            <option value="coworker">Coworker or Business</option>
+            <option value="friend">Friend</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+    <div>
+        <label for="append-accommodation-selector">Apply only to accommodation status</label>
+        <select name="append-accommodation-selector" id="append-accommodation-selector" multiple>
+            <option value="all">All</option>
+            <option value="True">Yes</option>
+            <option value="False">No</option>
+        </select>
+    </div>
+    <button type="submit">Submit Text</button>
+</form>
+
 <h1>All Profiles</h1>
 <table class="table table-striped" border="1">
     <tr>

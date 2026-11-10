@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timezone
 from flask_sqlalchemy import SQLAlchemy
 import random
@@ -139,6 +139,62 @@ def admin_profiles():
 def admin_feedback():
     feedbacks = Feedback.query.all()
     return render_template('admin_feedback.html', feedbacks=feedbacks)
+
+@app.route('/admin/profiles/appendComments', methods=("GET", "POST"))
+def admin_profiles_appendComments():
+    if request.method == "POST":
+        text = request.form.get('append-text')
+        rel_type = request.form.getlist('append-rel-selector')
+        accom_type = request.form.getlist('append-accommodation-selector')
+
+        if not text:
+            error = "Please enter text"
+            profiles = Profile.query.all()
+            return render_template('admin_profiles.html', profiles=profiles, error=error)
+        profiles_to_update = []
+
+        if "all" in rel_type and "all" in accom_type:
+            profiles_to_update = Profile.query.all()
+        elif "all" in rel_type:
+            for accom_type in accom_type:
+                for profiles in Profile.query.filter_by(accommodations=accom_type).all():
+                    profiles_to_update.append(profiles)
+        elif "all" in accom_type:
+            for rel_type in rel_type:
+                for profiles in Profile.query.filter_by(rel=rel_type).all():
+                    profiles_to_update.append(profiles)
+        else:
+            for rel_type in rel_type:
+                for profiles in Profile.query.filter_by(rel=rel_type).filter_by(accommodations=accom_type).all():
+                    profiles_to_update.append(profiles)
+
+        for profile in profiles_to_update:
+            profile.comments += "-" + text
+        try:
+            db.session.commit()
+        except Exception as e:
+            error = "Error adding text"
+            profiles = Profile.query.all()
+            return render_template('admin_profiles.html', profiles=profiles, error=error)
+    try:
+        profiles_to_update = Profile.query.filter_by(accommodations=True).all()
+        for profile in profiles_to_update:
+            if " - email accommodation form" not in profile.comments:
+                profile.comments += " - email accommodation form"
+
+        db.session.commit()
+        return redirect(url_for('admin_profiles'))
+    except Exception as e:
+        db.session.rollback()
+        error = f"Error updating profiles: {str(e)}"
+        profiles = Profile.query.all()
+        return render_template('admin_profiles.html', profiles=profiles, error=error)
+
+
+
+
+
+
 
 @app.route('/quiz')
 def quiz():
