@@ -139,3 +139,7 @@ def admin_profiles():
 def admin_feedback():
     feedbacks = Feedback.query.all()
     return render_template('admin_feedback.html', feedbacks=feedbacks)
+
+@app.route('/quiz')
+def quiz():
+    return render_template('quiz.html')
